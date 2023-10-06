@@ -1,8 +1,9 @@
 import numpy as np
 
+
 class Greedy:
 
-    #Change to priority queue
+    # Change to priority queue
     visited = []
 
     vertices = {0: 'A',
@@ -18,42 +19,56 @@ class Greedy:
                 10: 'R',
                 11: 'S'}
 
-    def greedySearch(self, startNode: int, goalNode : int, matrix: np.ndarray, heuristics : dict[str, int]) -> None:
+    """
+    TODO:
+    Compare current hValue to neighboring hValues
+        Set min = current hValue
+    
+    
+    """
+    @classmethod
+    def greedySearch(self, startNode: int, goalNode: int, matrix: np.ndarray, heuristics: list[int]) -> None:
 
-        self.visited.append(startNode)
         currentNode = startNode
+        # self.visited.append(currentNode)
 
+        # Continue while goal node is not reached
         while currentNode != goalNode:
 
-            heuristicValues = {}
+            self.visited.append(currentNode)
 
-            for neighbor in len(matrix):
-    
-                neighborEdgeCost = matrix[currentNode][neighbor] 
-                
-                if neighborEdgeCost > 0:
-    
-                    neighborNodeLetter = self.vertices.get(neighbor)
-                    neighborHeuristic = heuristics.get(neighborNodeLetter)
-                    heuristicValues.append(neighborNodeLetter, neighborHeuristic)
+            heuristicValues = []
+            neighbors = []
+            """
+                Search through all neighbors
+                Create a list of neighbors and list of their hValues
+            """
+            for neighbor in range(len(matrix)):
+                if neighbor not in self.visited and matrix[currentNode][neighbor] > 0:
+                    hValue = heuristics[neighbor]
+                    heuristicValues.append(hValue)
+                    neighbors.append(neighbor)
 
-            minVal = 10000
-            nextNodeLetter = ""
+            """
+                Set current hValue as min
+                Iterate through hValues
+                Compare current hValue to neighboring hValues
+                Find min hValue
+                Use min's index to find the node we want to go to
+                Set currentNode equal to lowest hValue node
+            """
+            min = heuristics[currentNode]
+            node = -1
+            for i in range(len(heuristicValues)):
+                if heuristicValues[i] < min:
+                    min = heuristicValues[i]
+                    node = neighbors[i]
 
-            for letter , value in heuristicValues:
-                if minVal < value:
-                    minVal = value
-                    nextNodeLetter = letter
+            currentNode = node
 
-            currentNode = 
+        self.visited.append(currentNode)
 
-
-     
-
-
-
-
-
-
-        return
-
+    @classmethod
+    def printVisited(self):
+        for node in self.visited:
+            print(f"->{self.vertices.get(node)}", end="")
