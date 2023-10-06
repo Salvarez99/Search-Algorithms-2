@@ -21,10 +21,7 @@ class Greedy:
 
     """
     TODO:
-    Compare current hValue to neighboring hValues
-        Set min = current hValue
-    
-    
+        Use a priority queue instead of a list
     """
     @classmethod
     def greedySearch(self, startNode: int, goalNode: int, matrix: np.ndarray, heuristics: list[int]) -> None:
