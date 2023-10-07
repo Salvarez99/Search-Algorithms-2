@@ -1,4 +1,5 @@
 import numpy as np
+from heapq import *
 
 
 class Greedy:
@@ -27,14 +28,15 @@ class Greedy:
     def greedySearch(self, startNode: int, goalNode: int, matrix: np.ndarray, heuristics: list[int]) -> None:
 
         currentNode = startNode
-        # self.visited.append(currentNode)
 
         # Continue while goal node is not reached
         while currentNode != goalNode:
 
             self.visited.append(currentNode)
 
+            # Priority Queue
             heuristicValues = []
+            # List
             neighbors = []
             """
                 Search through all neighbors
@@ -43,25 +45,17 @@ class Greedy:
             for neighbor in range(len(matrix)):
                 if neighbor not in self.visited and matrix[currentNode][neighbor] > 0:
                     hValue = heuristics[neighbor]
-                    heuristicValues.append(hValue)
+                    heappush(heuristicValues, hValue)
                     neighbors.append(neighbor)
 
             """
-                Set current hValue as min
-                Iterate through hValues
-                Compare current hValue to neighboring hValues
-                Find min hValue
-                Use min's index to find the node we want to go to
-                Set currentNode equal to lowest hValue node
+            PQ will give me the lowest hValue
+            Need to find the node correlated to that hValue
+            Then set currentNode equal to correlated node
             """
-            min = heuristics[currentNode]
-            node = -1
-            for i in range(len(heuristicValues)):
-                if heuristicValues[i] < min:
-                    min = heuristicValues[i]
-                    node = neighbors[i]
-
-            currentNode = node
+            for neighbor in neighbors:
+                if heuristics[neighbor] == heappop(heuristicValues):
+                    currentNode = neighbor
 
         self.visited.append(currentNode)
 
