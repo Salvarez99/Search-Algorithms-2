@@ -53,8 +53,9 @@ class Greedy:
             Need to find the node correlated to that hValue
             Then set currentNode equal to correlated node
             """
+            nextHValue = heappop(heuristicValues)
             for neighbor in neighbors:
-                if heuristics[neighbor] == heappop(heuristicValues):
+                if heuristics[neighbor] == nextHValue:
                     currentNode = neighbor
 
         self.visited.append(currentNode)
