@@ -20,7 +20,11 @@ np_matrix = np.array([(0,  2,  2,  0,  0,  0,  0,  0,  0,  0,  0,  0),
 #                   A  B  C  D  E  F  G  H  P  Q  R  S
 graph_heuristics = [5, 7, 4, 7, 5, 2, 0, 11,14,12,3, 10]
 
+print("Greedy Search")
 Greedy.greedySearch(11, 6, np_matrix, graph_heuristics)
 Greedy.printVisited()
+
+print("\n\nA* Search")
+
 
 # BinaryTree.testTree()
