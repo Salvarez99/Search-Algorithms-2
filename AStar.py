@@ -69,15 +69,3 @@ class AStar:
         print("Visited Search State: ", end="")
         for node in self.visited:
             print(f"->{self.vertices.get(node)}", end="")
-
-
-                        
-
-
-
-
-                        
-
-
-
-
