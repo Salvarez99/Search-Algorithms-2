@@ -21,43 +21,63 @@ class AStar:
 
     @classmethod
     def aStarSearch(self, startNode: int, goalNode: int, matrix: np.ndarray, heuristics: list[int]) -> None:
-        
-        openSet = [] #Priority queue to store nodes to be evaluated
-        heappush(openSet, startNode)
+        nodeSet = [] #aScore, node
+        aScores = {} #node, gScore + distance
+        gScores = {} #edge cost
+        #have hValues in heuristics[]
 
-        cameFrom = {}
-        gScore = {}
-        fScore = {}
+        gScores[startNode] = 0
+        aScores[startNode] = gScores.get(startNode) + heuristics[startNode]
 
-        #Adding startNode key, values
-        gScore[startNode] = 0
-        fScore[startNode] = 10
-        tentGScore = 0
+        heappush(nodeSet, (aScores.get(startNode), startNode))
 
-        while len(openSet) > 0:
-            currentNode = heappop(openSet) #Get node will lowest fScore
+        while len(nodeSet) > 0:
 
-            if currentNode == goalNode:
-                #Do stuff here
-                print("Done")
+            if goalNode not in self.visited:
+
+                currentAScore, currentNode = heappop(nodeSet)
+
+                if currentNode != goalNode:
+
+                    for neighbor in range(len(matrix)):
+                        neighborEdge = matrix[currentNode][neighbor]
+                        neighGScore = matrix[currentNode][neighbor] + gScores.get(currentNode)
+                        if neighborEdge > 0:
+
+                            if neighbor not in self.visited and neighbor not in aScores:
+                                gScores[neighbor] = neighGScore #edge cost to neighbor
+                                aScores[neighbor] = gScores.get(neighbor) + heuristics[neighbor]
+                                heappush(nodeSet, (aScores[neighbor], neighbor))
+                            else:
+                                nAScore = neighGScore + heuristics[neighbor]
+
+                                if nAScore < aScores.get(neighbor):
+                                    gScores[neighbor] = neighGScore #edge cost to neighbor
+                                    aScores[neighbor] = gScores.get(neighbor) + heuristics[neighbor]
+                                    heappush(nodeSet, (aScores[neighbor], neighbor))
+
+
+                    self.visited.append(currentNode)
+                else:
+                    self.visited.append(currentNode)
+            else:
+                # print(self.visited)
                 return
-            
-            for neighbor in range(len(matrix)):
 
-                edgeCost = matrix[currentNode][neighbor]
-
-                if edgeCost > 0: #Check if there is a neighbor
-                    gScore[neighbor] = edgeCost
-                    tentGScore = gScore.get(currentNode) + gScore.get(neighbor)  #cost from current node to next node
-
-                    if gScore.get(currentNode) < gScore.get(neighbor):
-                        cameFrom[neighbor] = currentNode
-                        gScore[neighbor] = tentGScore
-                        fScore[neighbor] = gScore[neighbor] + heuristics[neighbor]
-
-                        if neighbor not in openSet:
-                            openSet.append(neighbor)
+    @classmethod
+    def printVisited(self):
+        print("Visited Search State: ", end="")
+        for node in self.visited:
+            print(f"->{self.vertices.get(node)}", end="")
 
 
-            
+                        
+
+
+
+
+                        
+
+
+
 

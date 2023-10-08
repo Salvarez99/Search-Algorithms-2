@@ -28,6 +28,7 @@ Greedy.printVisited()
 
 print("\n\nA* Search")
 AStar.aStarSearch(11, 6, np_matrix, graph_heuristics)
+AStar.printVisited()
 
 
 # BinaryTree.testTree()
