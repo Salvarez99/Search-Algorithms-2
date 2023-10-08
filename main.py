@@ -1,6 +1,8 @@
 import numpy as np
 from BinaryTree import *
 from Greedy import *
+from AStar import *
+
 
 np_matrix = np.array([(0,  2,  2,  0,  0,  0,  0,  0,  0,  0,  0,  0),
                       (2,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0),
@@ -25,6 +27,7 @@ Greedy.greedySearch(11, 6, np_matrix, graph_heuristics)
 Greedy.printVisited()
 
 print("\n\nA* Search")
+AStar.aStarSearch(11, 6, np_matrix, graph_heuristics)
 
 
 # BinaryTree.testTree()
