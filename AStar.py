@@ -24,6 +24,7 @@ class AStar:
         nodeSet = [] #aScore, node
         aScores = {} #node, gScore + distance
         gScores = {} #edge cost
+        parents = {} #parent node
         #have hValues in heuristics[]
 
         gScores[startNode] = 0
@@ -48,6 +49,7 @@ class AStar:
                                 gScores[neighbor] = neighGScore #edge cost to neighbor
                                 aScores[neighbor] = gScores.get(neighbor) + heuristics[neighbor]
                                 heappush(nodeSet, (aScores[neighbor], neighbor))
+                                parents[neighbor] = currentNode
                             else:
                                 nAScore = neighGScore + heuristics[neighbor]
 
@@ -55,14 +57,35 @@ class AStar:
                                     gScores[neighbor] = neighGScore #edge cost to neighbor
                                     aScores[neighbor] = gScores.get(neighbor) + heuristics[neighbor]
                                     heappush(nodeSet, (aScores[neighbor], neighbor))
+                                    parents[neighbor] = currentNode
+
 
 
                     self.visited.append(currentNode)
                 else:
                     self.visited.append(currentNode)
+                    self.printPath(startNode, goalNode, parents, aScores)
             else:
-                # print(self.visited)
                 return
+
+    @classmethod
+    def printPath(self, startNode : int, goalNode : int, parents : dict, aScores: dict):
+
+        path = []
+        print("Lowest Cost Path: ", end="")
+        current = goalNode
+        while current != startNode:
+            path.append(current)
+            current = parents[current]
+
+        path.append(startNode)
+
+        for node in reversed(path):
+            print(f"->{self.vertices.get(node)}({aScores[node]})",end="")
+
+        print()
+
+        
 
     @classmethod
     def printVisited(self):
