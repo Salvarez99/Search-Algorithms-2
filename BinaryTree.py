@@ -6,12 +6,14 @@ class BinaryTree:
     right: Type[BinaryTree]
     rootid: int
     value: int
+    max : bool
 
-    def __init__(self, rootid, value):
+    def __init__(self, rootid, value, max):
         self.left = None
         self.right = None
         self.rootid = rootid
         self.value = value
+        self.max = max
 
     def getLeftChild(self):
         return self.left
@@ -24,23 +26,25 @@ class BinaryTree:
 
     def getNodeValue(self):
         return self.value
+    
+    def setMax(self, max : bool):
+        self.max = max
 
-    def insertRight(self, newNode, value):
+    def insertRight(self, newNode, value, max):
         if self.right == None:
-            self.right = BinaryTree(newNode, value)
-            # self.right.setNodeValue(value)
+            self.right = BinaryTree(newNode, value, max)
 
         else:
-            tree = BinaryTree(newNode, value)
+            tree = BinaryTree(newNode, value, max)
             tree.right = self.right
             self.right = tree
 
-    def insertLeft(self, newNode, value):
+    def insertLeft(self, newNode, value, max):
         if self.left == None:
-            self.left = BinaryTree(newNode, value)
-            # self.left.setNodeValue(value)
+            self.left = BinaryTree(newNode, value, max)
+
         else:
-            tree = BinaryTree(newNode, value)
+            tree = BinaryTree(newNode, value, max)
             tree.left = self.left
             self.left = tree
 
